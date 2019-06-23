@@ -2,7 +2,7 @@ import { Common } from "./mercadopago-px.common";
 import * as app from "tns-core-modules/application";
 
 export class MercadopagoPx extends Common {
-    public setup(publicKey: string, preferenceId: string) {
+    public start(publicKey: string, preferenceId: string) {
         let checkout = MercadoPagoCheckout.alloc().initWithBuilder(
             MercadoPagoCheckoutBuilder.alloc()
                 .initWithPublicKeyPreferenceId(publicKey, preferenceId)
