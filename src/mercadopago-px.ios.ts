@@ -9,6 +9,7 @@ export class MercadopagoPx extends Common {
                 .setLanguage("es")
         );
 
+        // TODO: Detectar los callbacks de finishCheckout y cancelCheckout
         checkout.startWithNavigationControllerLifeCycleProtocol(
             app.ios.rootController,
             null

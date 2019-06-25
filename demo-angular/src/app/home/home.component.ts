@@ -18,9 +18,16 @@ export class HomeComponent implements OnInit {
     }
 
     onClick(): void {
-        this.mercadoPago.start(
-            "TEST-4763b824-93d7-4ca2-a7f7-93539c3ee5bd",
-            "243966003-0812580b-6082-4104-9bce-1a4c48a5bc44"
-        );
+        this.mercadoPago
+            .start(
+                "TEST-4763b824-93d7-4ca2-a7f7-93539c3ee5bd",
+                "243966003-0812580b-6082-4104-9bce-1a4c48a5bc44"
+            )
+            .then(result => {
+                console.dir(result);
+            })
+            .catch(error => {
+                console.dir(error);
+            });
     }
 }
