@@ -1,7 +1,9 @@
 import { Options } from "./mercadopago-px.common";
 import * as app from "tns-core-modules/application";
 
-declare const PXLifeCycleProtocol: any;
+declare const PXLifeCycleProtocol: any,
+    MercadoPagoCheckout: any,
+    MercadoPagoCheckoutBuilder: any;
 
 export class LifeCycleProtocolImpl extends NSObject
     implements PXLifeCycleProtocol {
@@ -15,14 +17,22 @@ export class LifeCycleProtocolImpl extends NSObject
     }
 
     cancelCheckout(): () => void {
-        this.reject("cancelCheckout");
+        this.reject({
+            status: "cancel",
+            data: null,
+            error: "cancelCheckout"
+        });
         return null;
     }
     changePaymentMethodTapped?(): () => void {
         return null;
     }
     finishCheckout(): (result: PXResult) => void {
-        this.resolve("finishCheckout");
+        this.resolve({
+            status: "finishCheckout",
+            data: null,
+            error: null
+        });
         return null;
     }
 }

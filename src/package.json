@@ -1,6 +1,6 @@
 {
     "name": "nativescript-mercadopago-px",
-    "version": "1.1.0",
+    "version": "1.1.1",
     "description": "Your awesome NativeScript plugin.",
     "main": "mercadopago-px",
     "typings": "index.d.ts",
@@ -27,7 +27,7 @@
         "demo.android": "npm run tsc && cd ../demo && tns run android",
         "demo.reset": "cd ../demo && npx rimraf -- hooks node_modules platforms package-lock.json",
         "demo-angular.ios": "npm run tsc && cd ../demo-angular && tns run ios",
-        "demo-angular.android": "npm run tsc && cd ../demo-angular && tns run android --emulator",
+        "demo-angular.android": "npm run tsc && cd ../demo-angular && tns run android",
         "demo-angular.reset": "cd ../demo-angular && npx rimraf -- hooks node_modules platforms package-lock.json",
         "plugin.prepare": "npm run build && cd ../demo && tns plugin remove nativescript-mercadopago-px && tns plugin add ../src && cd ../demo-angular && tns plugin remove nativescript-mercadopago-px && tns plugin add ../src",
         "clean": "npm run demo.reset && npm run demo-angular.reset && npx rimraf -- node_modules package-lock.json && npm i"
