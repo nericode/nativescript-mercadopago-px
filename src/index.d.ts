@@ -1,4 +1,20 @@
-import { Common } from "./mercadopago-px.common";
-export declare class MercadopagoPx extends Common {
-    public start(publicKey: string, preferenceId: string): Promise<any>;
+export declare class MercadopagoPx {
+    public start(options: Options): Promise<any>;
+}
+
+export declare class Options {
+    /**
+     * Only set language in iOS
+     * */
+    language?: string;
+
+    /**
+     *set publicKey
+     * */
+    publicKey: string;
+
+    /**
+     * set preferenceId
+     * */
+    preferenceId: string;
 }

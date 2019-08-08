@@ -1,17 +1,17 @@
-import { Common } from "./mercadopago-px.common";
+import { Options } from "./mercadopago-px.common";
 import * as app from "tns-core-modules/application";
 
-export class MercadopagoPx extends Common {
+export class MercadopagoPx {
     private REQUEST_CODE = 1;
 
-    public start(publicKey: string, preferenceId: string): Promise<any> {
+    public start(options: Options): Promise<any> {
         return new Promise((resolve, reject) => {
             let activity =
                 app.android.startActivity || app.android.foregroundActivity;
 
             let checkout = new com.mercadopago.android.px.core.MercadoPagoCheckout.Builder(
-                publicKey,
-                preferenceId
+                options.publicKey,
+                options.preferenceId
             ).build();
 
             checkout.startPayment(activity, this.REQUEST_CODE);
@@ -22,19 +22,19 @@ export class MercadopagoPx extends Common {
                     resultCode,
                     data: any
                 ) => {
-                    if (requestCode == this.REQUEST_CODE) {
+                    if (requestCode === this.REQUEST_CODE) {
                         if (
-                            resultCode ==
+                            resultCode ===
                             com.mercadopago.android.px.core.MercadoPagoCheckout
                                 .PAYMENT_RESULT_CODE
                         ) {
-                            var payment = data.getSerializableExtra(
+                            let payment = data.getSerializableExtra(
                                 com.mercadopago.android.px.core
                                     .MercadoPagoCheckout.EXTRA_PAYMENT_RESULT
                             );
 
                             resolve({
-                                status: "success",
+                                status: "finishCheckout",
                                 data: {
                                     id: payment.getId(),
                                     status: payment.getPaymentStatus(),
@@ -46,7 +46,7 @@ export class MercadopagoPx extends Common {
                                 },
                                 error: null
                             });
-                        } else if (resultCode == 0) {
+                        } else if (resultCode === 0) {
                             if (
                                 data != null &&
                                 data.getExtras() != null &&
@@ -69,16 +69,16 @@ export class MercadopagoPx extends Common {
                                 });
                             } else {
                                 reject({
-                                    status: "canceled",
+                                    status: "cancel",
                                     data: null,
-                                    error: "canceled payment"
+                                    error: "cancelCheckout"
                                 });
                             }
                         }
                     }
                 };
             } catch (exception) {
-                reject("error sdk mercadopago");
+                reject("errorSdkMercadopago");
             }
         });
     }

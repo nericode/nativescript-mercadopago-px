@@ -1,8 +1,12 @@
-import { Common } from "./mercadopago-px.common";
+import { Options } from "./mercadopago-px.common";
 import * as app from "tns-core-modules/application";
 
 export class LifeCycleProtocolImpl extends NSObject
     implements PXLifeCycleProtocol {
+
+    public resolve: any;
+    public reject: any;
+
     static ObjCProtocols = [PXLifeCycleProtocol]; // define our native protocalls
 
     static new(): LifeCycleProtocolImpl {
@@ -10,29 +14,31 @@ export class LifeCycleProtocolImpl extends NSObject
     }
 
     cancelCheckout(): () => void {
-        console.info("cancelCheckout");
+        this.reject("cancelCheckout");
         return null;
     }
     changePaymentMethodTapped?(): () => void {
-        console.info("changePaymentMethodTapped");
         return null;
     }
     finishCheckout(): (result: PXResult) => void {
-        console.info("finishCheckout");
+        this.resolve("finishCheckout");
         return null;
     }
 }
 
-export class MercadopagoPx extends Common {
-    public start(publicKey: string, preferenceId: string): Promise<any> {
+export class MercadopagoPx {
+    public start(options: Options): Promise<any> {
         return new Promise((resolve, reject) => {
             let checkout = MercadoPagoCheckout.alloc().initWithBuilder(
                 MercadoPagoCheckoutBuilder.alloc()
-                    .initWithPublicKeyPreferenceId(publicKey, preferenceId)
-                    .setLanguage("es")
+                    .initWithPublicKeyPreferenceId(options.publicKey, options.preferenceId)
+                    .setLanguage(options.language)
             );
 
             let lifeCycleProtocolDelegate: LifeCycleProtocolImpl = LifeCycleProtocolImpl.new();
+            lifeCycleProtocolDelegate.resolve = resolve;
+            lifeCycleProtocolDelegate.reject = reject;
+
             let pxLifeCycleProtocol: PXLifeCycleProtocol = lifeCycleProtocolDelegate;
 
             checkout.startWithNavigationControllerLifeCycleProtocol(

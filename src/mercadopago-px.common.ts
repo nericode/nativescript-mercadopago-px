@@ -1,5 +1,16 @@
-import { Observable } from 'tns-core-modules/data/observable';
+export class Options {
+    /**
+     * Only set language in iOS
+     * */
+    language?: string = "es";
 
-export class Common extends Observable {
+    /**
+     *set publicKey
+     * */
+    publicKey: string;
 
+    /**
+     * set preferenceId
+     * */
+    preferenceId: string;
 }
