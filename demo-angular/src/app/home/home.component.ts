@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { MercadopagoPx } from "nativescript-mercadopago-px";
+import * as frameModule from "tns-core-modules/ui/frame";
 
 @Component({
     selector: "Home",
@@ -20,6 +21,7 @@ export class HomeComponent implements OnInit {
 
         this.mercadoPago
             .start({
+                controller: frameModule.topmost().ios.controller,
                 language: "es",
                 publicKey: "TEST-8ce06797-4500-488b-a302-2ac8886f946d",
                 preferenceId: "302524805-5b493807-8906-40da-ac16-8159e6015ad6"

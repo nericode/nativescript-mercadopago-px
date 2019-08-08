@@ -1,6 +1,6 @@
 {
     "name": "nativescript-mercadopago-px",
-    "version": "1.1.1",
+    "version": "1.1.2",
     "description": "Your awesome NativeScript plugin.",
     "main": "mercadopago-px",
     "typings": "index.d.ts",
@@ -23,11 +23,11 @@
         "plugin.tscwatch": "npm run tsc -- -w",
         "ci.tslint": "npm i && tslint '**/*.ts' --config '../tslint.json' --exclude '**/node_modules/**' --exclude '**/platforms/**'",
         "prepack": "npm run build.native",
-        "demo.ios": "npm run tsc && cd ../demo && tns run ios",
-        "demo.android": "npm run tsc && cd ../demo && tns run android",
+        "demo.ios": "npm run tsc && cd ../demo && tns run ios --no-hmr",
+        "demo.android": "npm run tsc && cd ../demo && tns run android --no-hmr",
         "demo.reset": "cd ../demo && npx rimraf -- hooks node_modules platforms package-lock.json",
-        "demo-angular.ios": "npm run tsc && cd ../demo-angular && tns run ios",
-        "demo-angular.android": "npm run tsc && cd ../demo-angular && tns run android",
+        "demo-angular.ios": "npm run tsc && cd ../demo-angular && tns run ios --emulator --no-hmr",
+        "demo-angular.android": "npm run tsc && cd ../demo-angular && tns run android --no-hmr",
         "demo-angular.reset": "cd ../demo-angular && npx rimraf -- hooks node_modules platforms package-lock.json",
         "plugin.prepare": "npm run build && cd ../demo && tns plugin remove nativescript-mercadopago-px && tns plugin add ../src && cd ../demo-angular && tns plugin remove nativescript-mercadopago-px && tns plugin add ../src",
         "clean": "npm run demo.reset && npm run demo-angular.reset && npx rimraf -- node_modules package-lock.json && npm i"

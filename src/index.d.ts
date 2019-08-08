@@ -2,11 +2,16 @@ export declare class MercadopagoPx {
     public start(options: Options): Promise<any>;
 }
 
-export declare class Options {
+export class Options {
+    /**
+     * Only set the native iOS UINavigationController
+     * */
+    controller?;
+
     /**
      * Only set language in iOS
      * */
-    language?: string;
+    language?: string = "es";
 
     /**
      *set publicKey

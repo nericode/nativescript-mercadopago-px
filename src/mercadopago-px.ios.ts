@@ -1,5 +1,6 @@
 import { Options } from "./mercadopago-px.common";
-import * as app from "tns-core-modules/application";
+// import * as app from "tns-core-modules/application";
+// import * as frameModule from "tns-core-modules/ui/frame";
 
 declare const PXLifeCycleProtocol: any,
     MercadoPagoCheckout: any,
@@ -55,8 +56,11 @@ export class MercadopagoPx {
 
             let pxLifeCycleProtocol: PXLifeCycleProtocol = lifeCycleProtocolDelegate;
 
+            // Get access to the native iOS UINavigationController
+            // var controller = frameModule.topmost().ios.controller;
+
             checkout.startWithNavigationControllerLifeCycleProtocol(
-                app.ios.rootController,
+                options.controller,
                 pxLifeCycleProtocol
             );
         });
