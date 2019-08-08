@@ -1,6 +1,8 @@
 import { Options } from "./mercadopago-px.common";
 import * as app from "tns-core-modules/application";
 
+declare const com;
+
 export class MercadopagoPx {
     private REQUEST_CODE = 1;
 

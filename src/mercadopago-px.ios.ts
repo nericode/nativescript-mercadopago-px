@@ -1,9 +1,10 @@
 import { Options } from "./mercadopago-px.common";
 import * as app from "tns-core-modules/application";
 
+declare const PXLifeCycleProtocol: any;
+
 export class LifeCycleProtocolImpl extends NSObject
     implements PXLifeCycleProtocol {
-
     public resolve: any;
     public reject: any;
 
@@ -31,7 +32,10 @@ export class MercadopagoPx {
         return new Promise((resolve, reject) => {
             let checkout = MercadoPagoCheckout.alloc().initWithBuilder(
                 MercadoPagoCheckoutBuilder.alloc()
-                    .initWithPublicKeyPreferenceId(options.publicKey, options.preferenceId)
+                    .initWithPublicKeyPreferenceId(
+                        options.publicKey,
+                        options.preferenceId
+                    )
                     .setLanguage(options.language)
             );
 
