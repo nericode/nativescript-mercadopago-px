@@ -1,4 +1,5 @@
 import { Options } from "./mercadopago-px.common";
+import * as frameModule from "tns-core-modules/ui/frame";
 
 export class LifeCycleProtocolImpl extends NSObject implements PXLifeCycleProtocol {
     public resolve: any;
@@ -50,7 +51,7 @@ export class MercadopagoPx {
             let pxLifeCycleProtocol: PXLifeCycleProtocol = lifeCycleProtocolDelegate;
 
             checkout.startWithNavigationControllerLifeCycleProtocol(
-                options.controller,
+                frameModule.topmost().ios.controller,
                 pxLifeCycleProtocol
             );
         });
