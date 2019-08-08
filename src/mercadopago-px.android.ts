@@ -3,13 +3,14 @@ import * as app from "tns-core-modules/application";
 
 declare const com: any;
 
+// const MercadoPagoError = com.mercadopago.android.px.model.exceptions.MercadoPagoError;
+
 export class MercadopagoPx {
     private REQUEST_CODE = 1;
 
     public start(options: Options): Promise<any> {
         return new Promise((resolve, reject) => {
-            let activity =
-                app.android.startActivity || app.android.foregroundActivity;
+            let activity = app.android.startActivity || app.android.foregroundActivity;
 
             let checkout = new com.mercadopago.android.px.core.MercadoPagoCheckout.Builder(
                 options.publicKey,
@@ -19,11 +20,7 @@ export class MercadopagoPx {
             checkout.startPayment(activity, this.REQUEST_CODE);
 
             try {
-                activity.onActivityResult = (
-                    requestCode,
-                    resultCode,
-                    data: any
-                ) => {
+                activity.onActivityResult = (requestCode, resultCode, data: any) => {
                     if (requestCode === this.REQUEST_CODE) {
                         if (
                             resultCode ===
@@ -31,8 +28,8 @@ export class MercadopagoPx {
                                 .PAYMENT_RESULT_CODE
                         ) {
                             let payment = data.getSerializableExtra(
-                                com.mercadopago.android.px.core
-                                    .MercadoPagoCheckout.EXTRA_PAYMENT_RESULT
+                                com.mercadopago.android.px.core.MercadoPagoCheckout
+                                    .EXTRA_PAYMENT_RESULT
                             );
 
                             resolve({
@@ -59,9 +56,9 @@ export class MercadopagoPx {
                                             .MercadoPagoCheckout.EXTRA_ERROR
                                     )
                             ) {
-                                let mercadoPagoError: com.mercadopago.android.px.model.exceptions.MercadoPagoError = data.getSerializableExtra(
-                                    com.mercadopago.android.px.core
-                                        .MercadoPagoCheckout.EXTRA_ERROR
+                                let mercadoPagoError = data.getSerializableExtra(
+                                    com.mercadopago.android.px.core.MercadoPagoCheckout
+                                        .EXTRA_ERROR
                                 );
 
                                 reject({
