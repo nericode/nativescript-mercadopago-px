@@ -1,1 +1,1 @@
-pod 'MercadoPagoSDK'
+pod 'MercadoPagoSDK', '~> 4.7.6'
