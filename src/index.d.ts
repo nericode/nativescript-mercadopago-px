@@ -1,5 +1,6 @@
 export declare class MercadopagoPx {
-    public start(options: Options): Promise<any>;
+    public listener(): Promise<any>;
+    public checkout(options: Options): Promise<any>;
 }
 
 export class Options {

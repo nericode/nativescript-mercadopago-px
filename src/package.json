@@ -24,7 +24,7 @@
         "ci.tslint": "npm i && tslint '**/*.ts' --config '../tslint.json' --exclude '**/node_modules/**' --exclude '**/platforms/**'",
         "prepack": "npm run build.native",
         "demo.ios": "npm run tsc && cd ../demo && tns run ios --no-hmr",
-        "demo.android": "npm run tsc && cd ../demo && tns run android --no-hmr",
+        "demo.android": "npm run tsc && cd ../demo && tns run android --emulator --no-hmr",
         "demo.reset": "cd ../demo && npx rimraf -- hooks node_modules platforms package-lock.json",
         "demo-angular.ios": "npm run tsc && cd ../demo-angular && tns run ios --emulator --no-hmr",
         "demo-angular.android": "npm run tsc && cd ../demo-angular && tns run android --no-hmr",

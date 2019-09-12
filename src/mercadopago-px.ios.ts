@@ -3,6 +3,8 @@ import * as frameModule from "tns-core-modules/ui/frame";
 
 export class LifeCycleProtocolImpl extends NSObject
     implements PXLifeCycleProtocol {
+    public resolve: any;
+    public reject: any;
     static ObjCProtocols = [PXLifeCycleProtocol]; // define our native protocalls
 
     static new(): LifeCycleProtocolImpl {
@@ -16,6 +18,12 @@ export class LifeCycleProtocolImpl extends NSObject
         return null;
     }
     finishCheckout(): (result: PXResult) => void {
+        this.resolve({
+            status: "closeCheckout",
+            data: null,
+            error: null
+        });
+
         return null;
     }
 }
@@ -23,7 +31,6 @@ export class LifeCycleProtocolImpl extends NSObject
 export class TrackProtocolImpl extends NSObject implements PXTrackerListener {
     public resolve: any;
     public reject: any;
-
     static ObjCProtocols = [PXTrackerListener]; // define our native protocalls
 
     static new(): TrackProtocolImpl {
@@ -42,16 +49,35 @@ export class TrackProtocolImpl extends NSObject implements PXTrackerListener {
         screenName: string,
         extraParams: NSDictionary<string, any>
     ): void {
-        if (screenName == "/px_checkout/result/success") {
+        var jsonData = NSJSONSerialization.dataWithJSONObjectOptionsError(
+            extraParams,
+            0
+        );
+
+        var extraParamsJson = JSON.parse(
+            NSString.alloc()
+                .initWithDataEncoding(jsonData, 4)
+                .toString()
+        );
+
+        if (extraParamsJson["payment_status"] == "approved") {
             this.resolve({
-                status: "finishCheckout",
-                data: { extraParams },
+                status: "successCheckout",
+                data: {
+                    id: extraParamsJson["session_id"],
+                    status: extraParamsJson["payment_status"],
+                    paymentMethodId: extraParamsJson["payment_method_id"],
+                    paymentTypeId: extraParamsJson["payment_id"],
+                    card: extraParamsJson["card_id"],
+                    issuerId: extraParamsJson["issuer_id"],
+                    installments: null
+                },
                 error: null
             });
-        } else if (screenName == "/px_checkout/result/error") {
+        } else if (extraParamsJson["payment_status"] == "rejected") {
             this.reject({
                 status: "error",
-                data: extraParams,
+                data: extraParamsJson,
                 error: null
             });
         }
@@ -59,7 +85,7 @@ export class TrackProtocolImpl extends NSObject implements PXTrackerListener {
 }
 
 export class MercadopagoPx {
-    public start(options: Options): Promise<any> {
+    public listener(): Promise<any> {
         return new Promise((resolve, reject) => {
             // Traacker Lister
             let trackProtocolDelegate: TrackProtocolImpl = TrackProtocolImpl.new();
@@ -68,7 +94,11 @@ export class MercadopagoPx {
             trackProtocolDelegate.reject = reject;
 
             PXTracker.setListener(trackCycleProtocol);
+        });
+    }
 
+    public checkout(options: Options): Promise<any> {
+        return new Promise((resolve, reject) => {
             // Build checkout
             let checkout = MercadoPagoCheckout.alloc().initWithBuilder(
                 MercadoPagoCheckoutBuilder.alloc()
@@ -82,6 +112,8 @@ export class MercadopagoPx {
             // Setup lifeCycle
             let lifeCycleProtocolDelegate: LifeCycleProtocolImpl = LifeCycleProtocolImpl.new();
             let pxLifeCycleProtocol: PXLifeCycleProtocol = lifeCycleProtocolDelegate;
+            lifeCycleProtocolDelegate.resolve = resolve;
+            lifeCycleProtocolDelegate.reject = reject;
 
             // Start checkout
             checkout.startWithNavigationControllerLifeCycleProtocol(
