@@ -1,6 +1,6 @@
 {
     "name": "nativescript-mercadopago-px",
-    "version": "2.5.5",
+    "version": "3.0.0",
     "description": "Your awesome NativeScript plugin.",
     "main": "mercadopago-px",
     "typings": "index.d.ts",
