@@ -20,7 +20,6 @@ export class LifeCycleProtocolImpl extends NSObject
         return null;
     }
     finishCheckout(): (result: PXResult) => void {
-        console.dir(extraParamsResult);
         this.resolve({
             status: "finishCheckout",
             data: {
