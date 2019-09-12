@@ -71,9 +71,9 @@ export class MercadopagoPx {
                                 });
                             } else {
                                 reject({
-                                    status: "cancel",
+                                    status: "cancelCheckout",
                                     data: null,
-                                    error: "cancelCheckout"
+                                    error: "cancel"
                                 });
                             }
                         }
