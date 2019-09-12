@@ -6,12 +6,6 @@ declare const com: any;
 export class MercadopagoPx {
     private REQUEST_CODE = 1;
 
-    public listener(): Promise<any> {
-        return new Promise((resolve, reject) => {
-            resolve("not listener implemented");
-        });
-    }
-
     public checkout(options: Options): Promise<any> {
         return new Promise((resolve, reject) => {
             let activity =
