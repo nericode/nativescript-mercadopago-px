@@ -17,6 +17,7 @@ export class HomeViewModel extends Observable {
                 preferenceId: "302524805-5b493807-8906-40da-ac16-8159e6015ad6"
             })
             .then(result => {
+                console.log("####### SUCCESS ########");
                 console.dir(result);
             })
             .catch(error => {
