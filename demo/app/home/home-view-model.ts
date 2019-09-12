@@ -11,16 +11,6 @@ export class HomeViewModel extends Observable {
 
     public onClick() {
         this.mercadopagoPx
-            .listener()
-            .then(result => {
-                console.log("listener -> ");
-                console.dir(result);
-            })
-            .catch(error => {
-                console.log(error);
-            });
-
-        this.mercadopagoPx
             .checkout({
                 language: "es",
                 publicKey: "TEST-8ce06797-4500-488b-a302-2ac8886f946d",
