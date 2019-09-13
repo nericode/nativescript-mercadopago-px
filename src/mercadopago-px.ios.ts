@@ -25,27 +25,19 @@ export class LifeCycleProtocolImpl extends NSObject
         return null;
     }
     finishCheckout(): (result: PXResult) => void {
-        if (extraParamsResult["payment_status"] == "rejected") {
-            this.reject({
-                status: "finishCheckout",
-                data: null,
-                error: null
-            });
-        } else if (extraParamsResult["payment_status"] == "approved") {
-            this.resolve({
-                status: "finishCheckout",
-                data: {
-                    id: extraParamsResult["session_id"],
-                    status: extraParamsResult["payment_status"],
-                    paymentMethodId: extraParamsResult["payment_method_id"],
-                    paymentTypeId: extraParamsResult["payment_id"],
-                    card: extraParamsResult["card_id"],
-                    issuerId: extraParamsResult["issuer_id"],
-                    installments: extraParamsResult["extra_info"]
-                },
-                error: null
-            });
-        }
+        this.resolve({
+            status: "finishCheckout",
+            data: {
+                id: extraParamsResult["session_id"],
+                status: extraParamsResult["payment_status"],
+                paymentMethodId: extraParamsResult["payment_method_id"],
+                paymentTypeId: extraParamsResult["payment_id"],
+                card: extraParamsResult["card_id"],
+                issuerId: extraParamsResult["issuer_id"],
+                installments: extraParamsResult["extra_info"]
+            },
+            error: null
+        });
 
         return null;
     }
