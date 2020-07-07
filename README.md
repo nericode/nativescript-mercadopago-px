@@ -106,30 +106,32 @@ If you want to use the plugin with Vue + Javascript in iOS, you must add the fol
 
 ```javascript
 const application = require("tns-core-modules/application");
-const MyDelegate = (function (_super) {
-    __extends(MyDelegate, _super);
-    function MyDelegate() {
-        _super.apply(this, arguments);
-    }
-    MyDelegate = UIResponder.extend(
-      {
-          get window() {
-              return this._window;
-          },
-          set window(aWindow) {
-              this._window = aWindow;
-          },
-      },
-      {
-          protocols: [UIApplicationDelegate],
+if (application.ios) {
+  const MyDelegate = (function (_super) {
+      __extends(MyDelegate, _super);
+      function MyDelegate() {
+          _super.apply(this, arguments);
       }
-    );
+      MyDelegate = UIResponder.extend(
+        {
+            get window() {
+                return this._window;
+            },
+            set window(aWindow) {
+                this._window = aWindow;
+            },
+        },
+        {
+            protocols: [UIApplicationDelegate],
+        }
+      );
 
-    MyDelegate.ObjCProtocols = [UIApplicationDelegate];
-    return MyDelegate;
-})(UIResponder);
+      MyDelegate.ObjCProtocols = [UIApplicationDelegate];
+      return MyDelegate;
+  })(UIResponder);
 
-application.ios.delegate = MyDelegate;
+  application.ios.delegate = MyDelegate;
+}
 ```
 
 ## License
