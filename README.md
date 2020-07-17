@@ -101,8 +101,39 @@ export default {
 ```
 
 #### iOS
+If you want to use the plugin with Angular or Vue + Javascript in iOS, you must add the following in your `app.js` or `main.js`
 
-If you want to use the plugin with Vue + Javascript in iOS, you must add the following in your `app.js` or `main.js`
+### Angular
+
+```javascript
+declare var UIResponder,
+    UIApplicationDelegate;
+
+if (app.ios) {
+    var appDelegate = UIResponder.extend(
+        {
+            get window() {
+                return this._window;
+            },
+            set window(aWindow) {
+                this._window = aWindow;
+            },
+        },
+        {
+            protocols: [UIApplicationDelegate],
+        }
+    );
+
+    app.ios.delegate = appDelegate;
+}
+
+...
+
+
+platformNativeScriptDynamic().bootstrapModule(AppModule);
+```
+
+### Vue
 
 ```javascript
 const application = require("tns-core-modules/application");
