@@ -106,6 +106,8 @@ If you want to use the plugin with Angular or Vue + Javascript in iOS, you must 
 ### Angular
 
 ```javascript
+import * as app from "tns-core-modules/application";
+
 declare var UIResponder,
     UIApplicationDelegate;
 
