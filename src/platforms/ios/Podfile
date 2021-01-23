@@ -1,1 +1,3 @@
-pod 'MercadoPagoSDK', '~> 4.28'
+pod 'MercadoPagoSDK', '4.32.4'
+pod 'MLCardDrawer', '1.5.1'
+pod 'MLCardForm', '0.9.1'
